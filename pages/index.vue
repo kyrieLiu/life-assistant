@@ -1,72 +1,58 @@
 <template>
-  <div class="container">
-    <div>
-      <logo />
-      <h1 class="title">
-        life-assistant
-      </h1>
-      <h2 class="subtitle">
-        My scrumtrulescent Nuxt.js project
-      </h2>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div class="router-page">
+    <list-view
+      :show-operate="true"
+      :search-form="searchForm"
+      :table-lable="tableLable"
+      :table-data="tableData"
+      :total-page="pageTotal"
+      :del-url="delUrl"
+      control-width="160px"
+      @handleSearch="initTable"
+    />
   </div>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
-
 export default {
-  components: {
-    Logo
+  data () {
+    return {
+      tableLable: [
+        { name: 'depTypeTitle', title: '组织类别', minWidth: 130 },
+        { name: 'department', title: '单位/部门', minWidth: 120 }
+
+      ],
+      searchForm: [
+        { name: '组织类别', placeholder: '请选择组织类别', data: [], type: 'select', key: 'depType' },
+        { name: '单位部门', placeholder: '请选择单位/部门', data: [], type: 'select', key: 'idRbacDepartment', disabled: true }
+      ],
+      tableData: [],
+      pageTotal: null,
+      delUrl: ''
+    }
+  },
+  methods: {
+    // 初始化数据
+    initTable (current, searchForm) {
+      // const param = {
+      //   pageable: {current: current, size: 10},
+      //   entity: searchForm,
+      // };
+      // const result = await this.$axios.post('/user', param);
+      this.tableData = [
+        {
+          depTypeTitle: '厨房',
+          department: '测试'
+        },
+        {
+          depTypeTitle: '厨房',
+          department: '测试'
+        }
+      ]
+    }
   }
 }
 </script>
 
 <style>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
-}
 </style>

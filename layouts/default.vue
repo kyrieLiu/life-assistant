@@ -1,55 +1,59 @@
 <template>
-  <div>
-    <nuxt />
+  <div class="root">
+    <sidebar class="sidebar-container" />
+    <div id="main-container">
+      <nuxt />
+    </div>
   </div>
 </template>
 
-<style>
-html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+<script>
+import Sidebar from '@/components/Sidebar/index'
+export default {
+  components: {
+    Sidebar
+  },
+  mounted () {
+    const mainHeight = document.getElementById('main-container').offsetHeight
+    this.getTableHeight(mainHeight)
+    window.addEventListener('resize', this.resizeBrowser)
+  },
+  beforeDestroy () {
+    window.removeEventListener('resize', this.resizeBrowser)
+  },
+  methods: {
+    // 处理浏览器变化
+    resizeBrowser () {
+      const mainHeight = document.getElementById('main-container').offsetHeight
+      this.getTableHeight(mainHeight)
+    },
+    // 计算table应有的高度  高度=容器高度-其他控件占有的控件高度
+    getTableHeight (mainHeight) {
+      const tableHeight = mainHeight - 220
+      this.$store.dispatch('app/setTableHeight', tableHeight)
+    }
+  }
 }
+</script>
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-}
-
-.button--green {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #3b8070;
-  color: #3b8070;
-  text-decoration: none;
-  padding: 10px 30px;
-}
-
-.button--green:hover {
-  color: #fff;
-  background-color: #3b8070;
-}
-
-.button--grey {
-  display: inline-block;
-  border-radius: 4px;
-  border: 1px solid #35495e;
-  color: #35495e;
-  text-decoration: none;
-  padding: 10px 30px;
-  margin-left: 15px;
-}
-
-.button--grey:hover {
-  color: #fff;
-  background-color: #35495e;
-}
+<style lang="scss" scoped>
+  @import "../assets/css/variables.scss";
+  .sidebar-container {
+    transition: width 0.28s;
+    width: $sideBarWidth;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  #main-container {
+    min-height: 100%;
+    transition: margin-left .28s;
+    margin-left:$sideBarWidth;
+    position: relative;
+  }
+  .root{
+  }
 </style>

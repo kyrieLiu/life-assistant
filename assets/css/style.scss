@@ -1,0 +1,228 @@
+@import "./transition";
+
+.router-page{
+  height: 100%;
+}
+.issue-dispose-record .list-file-name{display: inline-block !important; cursor: pointer;}
+.el-textarea .el-input__count,.el-input__suffix {
+  background: none !important;
+}
+ .marginTable>div {
+   margin: 0 auto !important;
+   display: table !important;
+ }
+ .align-left{text-align: left;}
+/*列表页搜索区域*/
+.search-area{
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 10px 25px 10px 20px;
+  height: auto;
+  background-color: rgb(252,252,252);
+  .el-form-item{
+    float: left;
+    margin-bottom: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 100%
+  }
+  &-button{
+    .el-form-item__content{
+      margin-left : 0px !important;
+    }
+  }
+}
+/*列表数据*/
+.table-content{
+  margin: 15px 20px 15px 20px;
+  .el-button--primary{
+    margin-bottom: 15px;
+  }
+}
+/*详情页外层布局*/
+.detail{
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /*详情页底部样式*/
+  .detail-bottom{
+    background-color: white;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2);
+    height: 55px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    justify-content: center;
+
+    z-index: 99;
+    /*底部button按钮*/
+    .detail-bottom-button{
+      margin-left: 15px;
+      margin-right: 15px;
+    }
+  }
+  /*详情页顶部展示*/
+  .detail-top{
+    background-color: white;
+    height: 55px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+    flex-shrink: 0;
+  }
+  /*详情页返回键*/
+  .el-icon-arrow-left{
+    margin-left: 20px;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  /*详情页标题*/
+  .detail-title{
+    flex-grow: 1;
+    text-align:center;
+    font-size:18px;
+    color: #4A4A4A;
+    margin-left:100px;
+    margin-right:100px;
+  }
+  /*详情页内容*/
+  .detail-content{
+    overflow: hidden;
+    overflow-y: auto;
+    height: 100%;
+    padding: 20px 20px;
+    /*margin: 10px 0px;*/
+    word-break: break-all;
+  }
+  .detail-content-block{
+    background-color: white;
+    padding: 24px;
+  }
+
+  /*详情页条目信息标题*/
+  .detail-key{
+    font-size: 14px;
+    font-weight: bold;
+    width: 10%;
+    color: rgb(55,55,55);
+
+  }
+  /*详情页条目信息内容*/
+  .detail-value{
+    max-width: 90%;
+    font-size: 14px;
+    color: rgb(103,103,103);
+    line-height: 22px;
+    display: inline-block;
+    box-sizing: border-box;
+    padding-left:10px;
+    // flex-grow: 1;  // 设置最小宽度
+  }
+  /*文件列表信息*/
+  .list-file-name{
+    min-width: 50px;
+    color: #0478FF;
+    margin-bottom: 5px;
+    display: table;
+    cursor: pointer;
+    text-align: left;
+    span{
+      cursor: pointer;
+      word-break: break-all;
+    }
+  }
+  .list-file-name:last-child{
+    margin-bottom: 0px;
+  }
+  /*详情页条目*/
+  .detail-content-item{
+    border-bottom: 1px solid rgb(246,245,249);
+    padding-bottom: 20px;
+    padding-top: 20px;
+    display: flex;
+    &:first-child{
+      padding-top: 0px;
+    }
+    &:last-child{
+      border-bottom: 0px;
+      padding-bottom: 0px;
+    }
+  }
+}
+
+/*详情页表格样式*/
+.detail-page-table {
+  width: 100%;
+
+
+  /*详情页表格单元格样式*/
+  td,th{
+    border: 1px solid #D9D9D9;
+    padding: 5px 10px 5px 10px;
+    vertical-align: middle;
+    height: 40px;
+    line-height: 25px;
+    font-family: PingFangSC-Regular;
+    color: #666666;
+    font-size: 14px;
+    text-align: left;
+    word-break: break-word;
+  }
+  /*详情页表格单元格标题样式*/
+  .title {
+    background: #F7F9FD;
+    text-align: center;
+    width: 200px;
+  }
+}
+
+/*列表表格数据内容居中*/
+/*详情页表格样式*/
+.detail-page-list-table {
+  width: 100%;
+  margin-top: 40px;
+  table-layout: fixed;
+  /*详情页表格单元格样式*/
+  td,th{
+    border: 1px solid #D9D9D9;
+    padding: 5px 10px 5px 10px;
+    vertical-align: middle;
+    height: 40px;
+    line-height: 25px;
+    font-family: PingFangSC-Regular;
+    color: #666666;
+    font-size: 14px;
+    text-align: center;
+    width: 100%;
+  }
+  /*详情页表格单元格标题样式*/
+  .title {
+    background: #F7F9FD;
+  }
+}
+
+/*详情页蓝边的蓝字的按钮样式*/
+.detail-page-normal-button {
+  border: 1px solid #3a8ee6;
+  color: #3a8ee6;
+  border-radius:5px;
+  width:110px;
+  line-height:32px;
+  display: block;
+  text-align: center;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.form-item-top{
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 500;
+}
+/*变窄table条目高度*/
+.el-table td, .el-table th {
+  padding: 8px 0;
+}
+.testColor{
+  color: red;
+}
