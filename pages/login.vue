@@ -1,189 +1,230 @@
 <template>
-  <div class="demo-input-suffix" style="margin-top:200px;">
-    <h2>后台登录系统</h2>
-    <el-form ref="ruleForm" :model="ruleForm" :rules="rules" class="demo-ruleForm">
-      <el-form-item prop="account">
+  <div class="login-container">
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
+      <el-form-item prop="username">
+        <span class="svg-container">
+          <i class="el-icon-user" />
+        </span>
         <el-input
-          v-model="ruleForm.account"
-          placeholder="请输入账号/邮箱/手机号码"
-          clearable
-        >
-          <i slot="prefix" class="el-input__icon el-icon-third-zhanghao" />
-        </el-input>
+          ref="username"
+          v-model="loginForm.username"
+          placeholder="Username"
+          name="username"
+          type="text"
+          tabindex="1"
+          auto-complete="on"
+        />
       </el-form-item>
+
       <el-form-item prop="password">
-        <el-input v-model="ruleForm.password" type="password" placeholder="请输入密码" show-password @blur="showImgVerify">
-          <i slot="prefix" class="el-input__icon el-icon-third-mima" />
-        </el-input>
+        <span class="svg-container">
+          <i class="el-icon-lock" />
+        </span>
+        <el-input
+          :key="passwordType"
+          ref="password"
+          v-model="loginForm.password"
+          :type="passwordType"
+          placeholder="Password"
+          name="password"
+          tabindex="2"
+          auto-complete="on"
+          @keyup.enter.native="handleLogin"
+        />
+        <span class="show-pwd" @click="showPwd">
+          <!--<svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />-->
+        </span>
       </el-form-item>
-      <el-form-item v-if="isShow" prop="imgVerify">
-        <el-input v-model="ruleForm.imgVerify" type="text" auto-complete="off" placeholder="验证码">
-          <template slot="append">
-            <img :src="imgVerifySrc" alt="" class="imgVerifySrc" @click="getImgVerify">
-          </template>
-        </el-input>
-      </el-form-item>
-      <div style="margin-top: 15px;">
-        <el-checkbox checked>
-          记住密码
-        </el-checkbox><a href="#" style="float:right;color:rgb(103, 102, 102);">忘记密码?联系管理员</a>
-      </div>
-      <div style="margin-top: 15px;">
-        <el-button type="primary" style="width:320px;" @click="submit('ruleForm')">
-          立即登录
-        </el-button>
-      </div>
+
+      <el-button id="loginButton" :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">
+        登录
+      </el-button>
     </el-form>
   </div>
 </template>
 
-<style>
-  a{
-    text-decoration:none;
-  }
-  .demo-input-suffix{
-    width: 320px;
-    margin: 88px auto;
-  }
-  .demo-input-suffix h2{
-    text-align: center;
-  }
-  el-input{
-    margin-top: 15px;
-  }
-  .imgVerifySrc{
-    margin-top: 2px;
-    width: 80px;
-    height: 32px;
-  }
-</style>
-
 <script>
 import Cookie from 'js-cookie'
-import utils from '../utils/cookie-access'
-
 export default {
   layout: 'blank',
   name: 'Login',
   data () {
     return {
-      isShow: 0,
-      ruleForm: {
-        imgVerifySrc: '',
-        imgVerify: '',
-        verifyGuid: this.createGuid(),
-        account: '',
-        password: ''
+      loginForm: {
+        username: 'admin',
+        password: '123456'
       },
-      rules: {
-        account: [
-          { required: true, message: '账号/邮箱/手机号码 不能为空' }
-        ],
-        password: [
-          { required: true, message: '密码 不能为空' }
-        ]
+      loginRules: {
+        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       },
-      visible: true
+      loading: false,
+      passwordType: 'password',
+      redirect: undefined
     }
   },
-  created () {
-    const token = utils.getcookiesInClient('token')
-    if (token) {
-      this.$router.push('/')
+  watch: {
+    $route: {
+      handler (route) {
+        this.redirect = route.query && route.query.redirect
+        console.log('this.redirect', route.query, route.query.redirect)
+      },
+      immediate: true
     }
   },
   mounted () {
-    this.getImgVerify()
-    const rediretUrl = this.$route.query.ref
-    if (rediretUrl) {
-      this.redirectURL = rediretUrl
-    }
+    document.addEventListener('keydown', this.keydownListener)
+  },
+  beforeDestroy () {
+    document.removeEventListener('keydown', this.keydownListener)
   },
   methods: {
-    getImgVerify () {
-      this.$axios.get('/verify/img', {
-        params: {
-          verifyGuid: this.ruleForm.verifyGuid,
-          _rand: parseInt(Math.random() * 9900000)
-        }
-      }).then((res) => {
-        console.log(res)
-        // 判断是否请求成功
-        if (res.data.statusCode === '200') {
-          this.imgVerifySrc = res.data.data.base64
-        }
+    keydownListener (event) {
+      if (event.key === 'Enter') {
+        this.handleLogin()
+      }
+    },
+    showPwd () {
+      if (this.passwordType === 'password') {
+        this.passwordType = ''
+      } else {
+        this.passwordType = 'password'
+      }
+      this.$nextTick(() => {
+        this.$refs.password.focus()
       })
-        .catch((res) => {
-          if (res.response.data.message === '') {
-            this.$message.error('请求异常，请稍后重试！')
-          } else {
-            this.$message.error(res.response.data.message)
-          }
-        })
     },
-    showImgVerify () {
-      if (this.ruleForm.account === '') { return }
-      this.$axios.get(`code/count?account=${this.ruleForm.account}`)
-        .then((res) => {
-          console.log(res)
-          // 判断是否请求成功
-          if (res.data.statusCode === '200') {
-            this.isShow = res.data.data.isShow
-          }
-        })
-        .catch((res) => {
-          if (res.response.data.message === '') {
-            this.$message.error('请求异常，请稍后重试！')
-          } else {
-            this.$message.error(res.response.data.message)
-          }
-        })
-    },
-    submit (ruleForm) {
-      Cookie.set('token', 'liu')
-      this.$router.push({
-        path: '/'
-      })
-      // this.$refs[ruleForm].validate((valid) => {
-      //   if (valid) {
-      //     this.$axios.post('/login', qs.stringify({
-      //       type: 1,
-      //       verifyGuid: this.ruleForm.verifyGuid,
-      //       imgVerify: this.ruleForm.imgVerify,
-      //       account: this.ruleForm.account,
-      //       password: this.ruleForm.password
-      //     })).then((res) => {
-      //       console.log(res)
-      //       // 判断是否请求成功
-      //       if (res.data.statusCode === '200') {
-      //         this.uid = res.data.data.uid
-      //         // 存储用户Uid
-      //         Cookie.set('Uid', this.uid)
-      //         // 将服务端的token存入cookie当中
-      //         Cookie.set('token', res.data.token)
-      //         this.$router.push({
-      //           path: '/'
-      //         })
-      //       }
-      //     })
-      //       .catch((res) => {
-      //         if (res.response.data.message === '') {
-      //           this.$message.error('请求异常，请稍后重试！')
-      //         } else {
-      //           this.$message.error(res.response.data.message)
-      //         }
-      //       })
-      //   } else {
-      //     return false
-      //   }
-      // })
-    },
-    createGuid () {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        const r = Math.random() * 16 | 0; const v = c === 'x' ? r : (r & 0x3 | 0x8)
-        return v.toString(16)
+    handleLogin () {
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.$axios.post('/user/login', this.loginForm).then((result) => {
+            console.log('登录信息', result)
+            if (result.data.code === 0) {
+              Cookie.set('token', result.data.data.token)
+              location.href = this.redirect || '/'
+            }
+          })
+        } else {
+          return false
+        }
       })
     }
   }
 }
 </script>
+
+<style lang="scss">
+
+  $bg:#283443;
+  $light_gray:#fff;
+  $cursor: #fff;
+
+  @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
+    .login-container .el-input input {
+      color: $cursor;
+    }
+  }
+
+  /* reset element-ui css */
+  .login-container {
+    .el-input {
+      display: inline-block;
+      height: 47px;
+      width: 85%;
+
+      input {
+        background: transparent;
+        border: 0px;
+        -webkit-appearance: none;
+        border-radius: 0px;
+        padding: 12px 5px 12px 15px;
+        color: $light_gray;
+        height: 47px;
+        caret-color: $cursor;
+
+        &:-webkit-autofill {
+          box-shadow: 0 0 0px 1000px $bg inset !important;
+          -webkit-text-fill-color: $cursor !important;
+        }
+      }
+    }
+
+    .el-form-item {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 5px;
+      color: #454545;
+    }
+  }
+</style>
+
+<style lang="scss" scoped>
+  $bg:#2d3a4b;
+  $dark_gray:#889aa4;
+  $light_gray:#eee;
+
+  .login-container {
+    min-height: 100%;
+    width: 100%;
+    background-color: $bg;
+    overflow: hidden;
+
+    .login-form {
+      position: relative;
+      width: 520px;
+      max-width: 100%;
+      padding: 160px 35px 0;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .tips {
+      font-size: 14px;
+      color: #fff;
+      margin-bottom: 10px;
+
+      span {
+        &:first-of-type {
+          margin-right: 16px;
+        }
+      }
+    }
+
+    .svg-container {
+      padding: 6px 5px 6px 15px;
+      color: $dark_gray;
+      vertical-align: middle;
+      width: 30px;
+      display: inline-block;
+    }
+
+    .title-container {
+      position: relative;
+
+      .title {
+        font-size: 26px;
+        color: $light_gray;
+        margin: 0px auto 40px auto;
+        text-align: center;
+        font-weight: bold;
+      }
+    }
+
+    .show-pwd {
+      position: absolute;
+      right: 10px;
+      top: 7px;
+      font-size: 16px;
+      color: $dark_gray;
+      cursor: pointer;
+      user-select: none;
+    }
+  }
+</style>

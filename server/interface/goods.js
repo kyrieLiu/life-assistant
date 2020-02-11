@@ -4,6 +4,7 @@ import Goods from '../dbs/models/goods'
 const router = new Router({ prefix: '/goods' })
 
 router.post('/list', async (ctx) => {
+  console.log('list返回')
   try {
     const list = await Goods.find()
     ctx.body = {
@@ -38,4 +39,4 @@ router.post('/addGoods', async function (ctx) {
   }
 })
 
-module.exports = router
+export default router
