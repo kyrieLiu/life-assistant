@@ -1,11 +1,24 @@
+import mongoose from 'mongoose'
+
+import goods from '../server/interface/goods'
+import dbConfig from './dbs/config'
+
 const Koa = require('koa')
 const consola = require('consola')
 const { Nuxt, Builder } = require('nuxt')
+const bodyParser = require('koa-bodyparser')
+const config = require('../nuxt.config.js')
 
 const app = new Koa()
 
+app.use(bodyParser({
+  extendTypes: ['json', 'form', 'text']
+}))
+mongoose.connect(dbConfig.dbs, {
+  useNewUrlParser: true
+})
+
 // Import and Set Nuxt.js options
-const config = require('../nuxt.config.js')
 config.dev = app.env !== 'production'
 
 async function start () {
@@ -23,7 +36,7 @@ async function start () {
     const builder = new Builder(nuxt)
     await builder.build()
   }
-
+  app.use(goods.routes()).use(goods.allowedMethods())
   app.use((ctx) => {
     ctx.status = 200
     ctx.respond = false // Bypass Koa's built-in response handling

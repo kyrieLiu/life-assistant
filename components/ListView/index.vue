@@ -109,7 +109,7 @@
       >
         <el-table-column label="序号" type="index" width="60" style="text-align:center" />
         <el-table-column
-          v-for="(item,index) in tableLable"
+          v-for="(item,index) in tableLabel"
           :key="index"
           :show-overflow-tooltip="!item.noTip"
           :width="item.width"
@@ -126,14 +126,14 @@
             >
               <!--默认展示无样式-->
               <div :style="item.style">
-                {{ scope.row[item.name] }}
+                {{ scope.row[item.key] }}
               </div>
             </slot>
           </template>
         </el-table-column>
-        <el-table-column label="操作" :fixed="fixed" :width="controlWidth">
+        <el-table-column v-if="showOperateColumn" label="操作" :fixed="fixed" :width="controlWidth">
           <template slot-scope="scope">
-            <span v-for="(items,index) in tableButton" :key="index">
+            <span v-for="(items,index) in tableButton" :key="index" class="button-block">
               <el-button
                 v-if="isShowButton(items,scope.row)"
                 size="mini"
@@ -239,6 +239,10 @@ export default {
   .list-operate{
     margin-left: 20px;
     margin-top: 15px;
+  }
+  .button-block{
+    margin-left: 5px;
+    margin-right: 5px;
   }
 
 </style>

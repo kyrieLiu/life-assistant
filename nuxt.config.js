@@ -1,6 +1,9 @@
 
 module.exports = {
   mode: 'universal',
+  env: {
+    _AXIOS_BASE_URL_: 'www.baidu.com'
+  },
   /*
   ** Headers of the page
   */
@@ -32,7 +35,8 @@ module.exports = {
   */
   plugins: [
     '@/plugins/element-ui',
-    '@/plugins/vue-config'
+    '@/plugins/vue-config',
+    '@/plugins/axios'
   ],
   /*
   ** Nuxt.js dev-modules

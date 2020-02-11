@@ -12,7 +12,7 @@ export const routes =
       icon: 'el-icon-film'
     },
     {
-      path: '/GoodsManage',
+      path: '/goodsManage',
       name: '物资管理',
       icon: 'el-icon-help',
       children: [{

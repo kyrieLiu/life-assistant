@@ -223,6 +223,10 @@
 .el-table td, .el-table th {
   padding: 8px 0;
 }
-.testColor{
-  color: red;
+.el-table .cell{
+  text-align: center;
+}
+.el-table th{background-color: rgb(249,249,249)}
+.el-dialog__header,.el-dialog__footer{
+  text-align: center;
 }

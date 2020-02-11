@@ -3,7 +3,7 @@
     <list-view
       :show-operate="true"
       :search-form="searchForm"
-      :table-lable="tableLable"
+      :table-label="tableLabel"
       :table-data="tableData"
       :total-page="pageTotal"
       :del-url="delUrl"
@@ -17,7 +17,7 @@
 export default {
   data () {
     return {
-      tableLable: [
+      tableLabel: [
         { name: 'depTypeTitle', title: '组织类别', minWidth: 130 },
         { name: 'department', title: '单位/部门', minWidth: 120 }
 

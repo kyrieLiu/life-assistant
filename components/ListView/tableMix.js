@@ -7,7 +7,7 @@
 export default {
   props: {
     // table顶部head列表
-    tableLable: {
+    tableLabel: {
       type: Array,
       required: true,
       default () {
@@ -49,7 +49,7 @@ export default {
       default: 140
     },
     // 是否要展示操作列
-    isBtnAll: {
+    showOperateColumn: {
       type: Boolean,
       default: true
     },
@@ -59,11 +59,6 @@ export default {
     },
     // 删除操作传ID方式  默认ID为数组方式
     delParamType: {
-      type: String,
-      default: ''
-    },
-    // 上移下移接口
-    tableTopBottomUrl: {
       type: String,
       default: ''
     },
@@ -99,17 +94,18 @@ export default {
     /** 根据权限code和业务字段判断是否要展示对应的操作按钮
      * */
     isShowButton (buttonInfo, tableItem) {
-      if (buttonInfo.icodeHide) {
-        const isHaveCode = this.vertifyOperateCode(buttonInfo.code)
-        // 根据业务数据条件判断是否显示按钮
-        if (tableItem.operateButton !== undefined) {
-          return isHaveCode && tableItem.operateButton === 1
-        } else {
-          return isHaveCode
-        }
-      } else {
-        return true
-      }
+      // if (buttonInfo.icodeHide) {
+      //   const isHaveCode = this.vertifyOperateCode(buttonInfo.code)
+      //   // 根据业务数据条件判断是否显示按钮
+      //   if (tableItem.operateButton !== undefined) {
+      //     return isHaveCode && tableItem.operateButton === 1
+      //   } else {
+      //     return isHaveCode
+      //   }
+      // } else {
+      //   return true
+      // }
+      return true
     },
 
     // 操作按钮点击事件
@@ -137,19 +133,6 @@ export default {
         }).then(() => {
           this.deleteItem(id)
         })
-      }
-    },
-    // 上移下移
-    async handleUpOrBottomMove (row, move) {
-      this.$store.dispatch('setAsyncLoading', true)
-      const result = await this.$post(this.tableTopBottomUrl, {
-        id: row.id,
-        up: move
-      })
-      if (result.data.code === 0) {
-        this.$emit('handleSearch', this.currentPage, this.searchValue)
-      } else {
-        this.$message.error(result.data.message)
       }
     },
     // 删除数据

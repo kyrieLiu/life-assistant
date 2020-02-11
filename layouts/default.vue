@@ -10,6 +10,7 @@
 <script>
 import Sidebar from '@/components/Sidebar/index'
 export default {
+  middleware: 'checkLogin',
   components: {
     Sidebar
   },
@@ -46,6 +47,7 @@ export default {
     top: 0;
     bottom: 0;
     left: 0;
+    z-index: 1001;
     overflow: hidden;
   }
   #main-container {
