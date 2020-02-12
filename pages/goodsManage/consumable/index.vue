@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="router-page">
     <list-view
+      v-show="!showDetail"
       :show-operate="true"
       :search-form="searchForm"
       :table-label="tableLabel"
@@ -12,22 +13,25 @@
       @handleSearch="initTableData"
       @handleClick="handleClick"
     />
-    <add-edit-dialog
+    <add-edit
       v-if="showDialog"
       :dialog-title="dialogTitle"
       :item-id="itemId"
       @close="showDialog=false"
       @submitSuccess="initTableData(1)"
     />
+    <detail v-if="showDetail" />
   </div>
 </template>
 
 <script>
 import listMixin from '../../../assets/js/listMixin'
-import addEditDialog from './addEditDialog'
+import addEdit from './addEdit'
+import detail from './detail'
 export default {
   components: {
-    addEditDialog
+    addEdit,
+    detail
   },
   mixins: [listMixin],
   data () {
@@ -43,7 +47,8 @@ export default {
       ],
       tableButton: [
         { name: '编辑' },
-        { name: '删除' }
+        { name: '删除' },
+        { name: '详情' }
       ],
       delUrl: ''
     }
@@ -77,6 +82,9 @@ export default {
           this.itemId = row._id
           this.dialogTitle = '编辑耗材'
           this.showDialog = true
+          break
+        case '详情':
+          this.showDetail = true
           break
       }
     }

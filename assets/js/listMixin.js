@@ -17,7 +17,9 @@ export default {
       // 条目数据
       itemData: '',
       // 条目数据ID
-      itemId: ''
+      itemId: '',
+      // 展示详情
+      showDetail: false
     }
   },
   mounted () {

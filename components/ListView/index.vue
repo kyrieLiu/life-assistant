@@ -4,9 +4,9 @@
    Description:列表页面组件
  -->
 <template>
-  <div>
+  <article>
     <!-----------------------------------顶部搜索-------------------------------------->
-    <div class="search-area container">
+    <section class="search-area container">
       <!--条件选择区域-->
       <div :style="{width:getContentWidth()}">
         <el-form class="search-area-left" label-width="70px" label-position="left" @submit.native.prevent>
@@ -85,19 +85,19 @@
           >
         </span>
       </div>
-    </div>
+    </section>
 
     <!-----------------------------------中间页面操作-------------------------------------->
-    <div v-if="showOperate" class="list-operate">
+    <section v-if="showOperate" class="list-operate">
       <slot name="operateArea">
         <el-button type="primary" icon="el-icon-plus" @click.prevent="handleAddClick">
           新增
         </el-button>
       </slot>
-    </div>
+    </section>
 
     <!-----------------------------------数据列表-------------------------------------->
-    <div class="table-content">
+    <section class="table-content">
       <el-table
         border
         empty-text="暂无数据"
@@ -152,8 +152,8 @@
           @current-change="handleCurrentChange"
         />
       </div>
-    </div>
-  </div>
+    </section>
+  </article>
 </template>
 
 <script>

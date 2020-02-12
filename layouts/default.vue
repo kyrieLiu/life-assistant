@@ -1,9 +1,7 @@
 <template>
   <div class="root">
     <sidebar class="sidebar-container" />
-    <div id="main-container">
-      <nuxt />
-    </div>
+    <nuxt id="main-container" />
   </div>
 </template>
 
@@ -26,6 +24,7 @@ export default {
     // 处理浏览器变化
     resizeBrowser () {
       const mainHeight = document.getElementById('main-container').offsetHeight
+      console.log('mainHeight==', mainHeight)
       this.getTableHeight(mainHeight)
     },
     // 计算table应有的高度  高度=容器高度-其他控件占有的控件高度
@@ -51,11 +50,16 @@ export default {
     overflow: hidden;
   }
   #main-container {
-    min-height: 100%;
+    height: 100%;
     transition: margin-left .28s;
     margin-left:$sideBarWidth;
     position: relative;
   }
   .root{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    top: 0;
   }
 </style>
