@@ -24,6 +24,6 @@ export default {
   },
   mounted () {
     // 初始化列表数据
-    this.initTableData(1)
+    this.initTableData(1, {})
   }
 }

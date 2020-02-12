@@ -1,3 +1,8 @@
+<!--
+   User: liuyin
+   Date: 2019/12/13 10:18 上午
+   Description:物品列表
+ -->
 <template>
   <div class="router-page">
     <list-view
@@ -30,8 +35,8 @@
 
 <script>
 import listMixin from '../../../assets/js/listMixin'
-import addEdit from './addEdit'
-import detail from './detail'
+import addEdit from '~/components/goods/consumable/addEdit'
+import detail from '~/components/goods/detail'
 export default {
   components: {
     addEdit,
@@ -61,11 +66,11 @@ export default {
   methods: {
     // 初始化数据
     initTableData (current, condition) {
+      // 1是耗材
+      condition.type = 1
       const params = {
         page: current,
         size: 10,
-        // 1是耗材
-        type: 1,
         condition
       }
       this.$axios.post(this.urls.goodsList, params).then((result) => {

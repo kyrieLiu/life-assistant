@@ -1,58 +1,86 @@
+<!--
+   User: liuyin
+   Date: 2019/12/13 10:18 上午
+   Description:物品列表
+ -->
 <template>
   <div class="router-page">
     <list-view
-      :show-operate="true"
+      v-show="!showDetail"
+      :show-operate="false"
       :search-form="searchForm"
       :table-label="tableLabel"
       :table-data="tableData"
-      :total-page="pageTotal"
+      :total="total"
+      :table-button="tableButton"
       :del-url="delUrl"
-      control-width="160px"
-      @handleSearch="initTable"
+      control-width="140px"
+      @handleSearch="initTableData"
+      @handleClick="handleClick"
+    />
+    <detail
+      v-if="showDetail"
+      :row-id="rowId"
+      @handleClose="showDetail=false"
     />
   </div>
 </template>
 
 <script>
+import listMixin from '../assets/js/listMixin'
+import detail from '~/components/goods/detail'
 export default {
+  components: {
+    detail
+  },
+  mixins: [listMixin],
   data () {
     return {
+      a: '',
       tableLabel: [
-        { name: 'depTypeTitle', title: '组织类别', minWidth: 130 },
-        { name: 'department', title: '单位/部门', minWidth: 120 }
-
+        { key: 'name', title: '名称' },
+        { key: 'address', title: '地址' },
+        { key: 'note', title: '备注' },
+        { key: 'typeName', title: '类型', width: '140px' }
       ],
       searchForm: [
-        { name: '组织类别', placeholder: '请选择组织类别', data: [], type: 'select', key: 'depType' },
-        { name: '单位部门', placeholder: '请选择单位/部门', data: [], type: 'select', key: 'idRbacDepartment', disabled: true }
+        { name: '名称', placeholder: '请输入名称', type: 'input', key: 'name' }
       ],
-      tableData: [],
-      pageTotal: null,
-      delUrl: ''
+      tableButton: [
+        { name: '详情' }
+      ]
     }
   },
   methods: {
     // 初始化数据
-    initTable (current, searchForm) {
-      // const param = {
-      //   pageable: {current: current, size: 10},
-      //   entity: searchForm,
-      // };
-      // const result = await this.$axios.post('/user', param);
-      this.tableData = [
-        {
-          depTypeTitle: '厨房',
-          department: '测试'
-        },
-        {
-          depTypeTitle: '厨房',
-          department: '测试'
+    initTableData (current, condition) {
+      const params = {
+        page: current,
+        size: 10,
+        condition
+      }
+      this.$axios.post(this.urls.goodsList, params).then((result) => {
+        if (result.code === 0) {
+          this.tableData = result.list
+          this.tableData.forEach((item) => {
+            if (item.type === 1) {
+              item.typeName = '耗材'
+            } else {
+              item.typeName = '物品'
+            }
+          })
+          this.total = result.total
+        } else {
+          this.$message.error(result.message)
         }
-      ]
+      }).catch((e) => {
+        this.$message.error(e)
+      })
+    },
+    handleClick (name, row) {
+      this.rowId = row._id
+      this.showDetail = true
     }
   }
 }
 </script>
-
-<style>
-</style>

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Sidebar from '@/components/Sidebar/index'
+import Sidebar from '@/components/sidebar/index'
 export default {
   middleware: 'checkLogin',
   components: {

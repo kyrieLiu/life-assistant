@@ -1,7 +1,7 @@
 /**
- * @author Liu Yin
- * @date 2020/2/11
- * @Description: axios配置
+ * author Liu Yin
+ * date 2020/2/11
+ * Description: axios配置
 */
 import Cookie from 'js-cookie'
 import ElementUI from 'element-ui'

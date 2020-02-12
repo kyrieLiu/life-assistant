@@ -1,7 +1,7 @@
 <!--
     User: 刘隐
     Date:  2019年7月16日15:10:48
-    Description:  工作动态详情
+    Description:  物品详情
  -->
 <template>
   <article class="detail">
@@ -42,7 +42,7 @@
   </article>
 </template>
 <script>
-import detailMixin from '../../../assets/js/detailMixin'
+import detailMixin from '../../assets/js/detailMixin'
 export default {
   mixins: [detailMixin],
   computed: {
