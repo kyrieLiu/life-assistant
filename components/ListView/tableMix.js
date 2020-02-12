@@ -4,6 +4,7 @@
  * Date: 2019/12/13 10:18 上午
  * Description: 列表混入
  */
+import bus from '~/utils/bus'
 export default {
   props: {
     // table顶部head列表
@@ -34,8 +35,8 @@ export default {
       type: Boolean,
       default: false
     },
-    // 总页数
-    totalPage: {
+    // 总条数
+    total: {
       type: Number,
       default: null
     },
@@ -88,6 +89,11 @@ export default {
     return {
       currentPage: 1
     }
+  },
+  created () {
+    bus.$on('initPage', () => {
+      this.currentPage = 1
+    })
   },
   methods: {
 
@@ -146,9 +152,9 @@ export default {
         param = [id]
       }
 
-      const result = await this.$http.post(this.delUrl, param)
+      const result = await this.$axios.post(this.delUrl, param)
       if (result) {
-        if (result.data.code === 0) {
+        if (result.code === 0) {
           if (this.tableData.length > 1 || this.currentPage === 1) {
             this.handleCurrentChange(this.currentPage)
           } else {
@@ -157,7 +163,7 @@ export default {
             )
           }
         } else {
-          this.$message.error(result.data.message)
+          this.$message.error(result.message)
         }
       } else {
         this.$message.error('删除失败')
@@ -171,15 +177,6 @@ export default {
   },
 
   computed: {
-    // 控制table loading
-    asyncLoading: {
-      get () {
-        return this.$store.state.asyncLoading
-      },
-      set (v) {
-        this.$store.dispatch('setAsyncLoading', v)
-      }
-    },
     // table高度
     tableHeight: {
       get () {
@@ -193,15 +190,9 @@ export default {
           return -1
         }
       }
-    },
-    // 空数据提示
-    asyncLoadingText: {
-      get () {
-        return this.$store.state.asyncLoadingText
-      },
-      set (v) {
-        this.$store.dispatch('setAsyncLoadingText', v)
-      }
     }
+  },
+  beforeDestroy () {
+    bus.$off('initPage')
   }
 }

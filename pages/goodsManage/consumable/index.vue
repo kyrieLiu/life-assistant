@@ -5,14 +5,20 @@
       :search-form="searchForm"
       :table-label="tableLabel"
       :table-data="tableData"
-      :total-page="pageTotal"
+      :total="total"
       :table-button="tableButton"
       :del-url="delUrl"
       control-width="160px"
       @handleSearch="initTableData"
       @handleClick="handleClick"
     />
-    <add-edit-dialog v-if="showDialog" :dialog-title="dialogTitle" @close="showDialog=false" />
+    <add-edit-dialog
+      v-if="showDialog"
+      :dialog-title="dialogTitle"
+      :item-id="itemId"
+      @close="showDialog=false"
+      @submitSuccess="initTableData(1)"
+    />
   </div>
 </template>
 
@@ -26,14 +32,14 @@ export default {
   mixins: [listMixin],
   data () {
     return {
+      a: '',
       tableLabel: [
         { key: 'name', title: '名称', minWidth: 130 },
         { key: 'address', title: '地址', minWidth: 120 }
 
       ],
       searchForm: [
-        { name: '耗材类型', placeholder: '请选择耗材类型', data: [], type: 'select', key: 'type' },
-        { name: '耗材用途', placeholder: '请选择耗材用途', data: [], type: 'select', key: 'address' }
+        { name: '名称', placeholder: '请输入名称', type: 'input', key: 'name' }
       ],
       tableButton: [
         { name: '编辑' },
@@ -44,30 +50,36 @@ export default {
   },
   methods: {
     // 初始化数据
-    initTableData (current, searchForm) {
-      this.$axios.post('/goods/list').then((result) => {
-        if (result.data.code === 0) {
-          this.tableData = result.data.list
+    initTableData (current, condition) {
+      const params = {
+        page: current,
+        size: 10,
+        condition
+      }
+      this.$axios.post('/goods/list', params).then((result) => {
+        if (result.code === 0) {
+          this.tableData = result.list
+          this.total = result.total
         } else {
-          this.$message.error(result.data.message)
+          this.$message.error(result.message)
         }
       }).catch((e) => {
         this.$message.error(e)
       })
     },
-    handleClick (val) {
-      switch (val) {
+    handleClick (name, row) {
+      switch (name) {
         case '新增':
           this.showDialog = true
-          this.dialogTitle = '新增'
+          this.dialogTitle = '新增耗材'
           break
         case '编辑':
+          this.itemId = row._id
+          this.dialogTitle = '编辑耗材'
+          this.showDialog = true
           break
       }
     }
   }
 }
 </script>
-
-<style>
-</style>

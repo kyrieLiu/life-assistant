@@ -4,7 +4,7 @@ import Redis from 'koa-redis'
 
 import jwt from 'jsonwebtoken'
 
-// import Users from '../dbs/models/users'
+import Users from '../dbs/models/users'
 
 const Store = new Redis().client
 
@@ -34,16 +34,10 @@ router.post('/login', async (ctx, next) => {
     }
     await Store.hset(token, 'username', username, 'password', ctx.request.body.password)
     await Store.hset(username, 'token', token)
-    // data = await Users.getOne({
-    //   find: {
-    //     phone: ctx.request.body.username,
-    //     password: ctx.request.body.password
-    //   }
-    // })
-
-    data = {
-      username: '刘隐'
-    }
+    data = await Users.findOne({
+      username: ctx.request.body.username,
+      password: ctx.request.body.password
+    })
 
     if (data) {
       ctx.body = {
@@ -52,6 +46,32 @@ router.post('/login', async (ctx, next) => {
         message: '登陆成功'
       }
     } else { ctx.body = { message: '登陆失败' } }
+  }
+})
+
+router.post('/register', async (ctx, next) => {
+  const username = ctx.request.body.username
+  if (!username) {
+    ctx.body = { message: '请输入用户名' }
+  } else if (!ctx.request.body.password) {
+    ctx.body = { message: '请输入密码' }
+  } else {
+    const user = new Users({
+      username,
+      password: ctx.request.body.password
+    })
+    try {
+      await user.save()
+      ctx.body = {
+        code: 0,
+        message: '注册成功'
+      }
+    } catch (e) {
+      ctx.body = {
+        code: -1,
+        message: '注册失败'
+      }
+    }
   }
 })
 

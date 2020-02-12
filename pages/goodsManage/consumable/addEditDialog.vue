@@ -16,6 +16,7 @@
       label-width="100px"
       :model="formData"
       :rules="formRules"
+      label-position="left"
     >
       <el-form-item label="耗材名称：" prop="name">
         <el-input
@@ -27,6 +28,13 @@
         <el-input
           v-model.trim="formData.address"
           placeholder="请输入地址"
+        />
+      </el-form-item>
+      <el-form-item label="备注：" prop="note">
+        <el-input
+          v-model.trim="formData.note"
+          placeholder="请输入备注"
+          type="textarea"
         />
       </el-form-item>
     </el-form>
@@ -50,7 +58,7 @@ export default {
       formData: {
         name: '',
         address: '',
-        type: '厨具'
+        note: ''
       },
       formRules: {
         name: [
@@ -62,14 +70,22 @@ export default {
       }
     }
   },
+  mounted () {
+    if (this.itemId) {
+      this.$axios.get(`/goods/detail?_id=${this.itemId}`).then((res) => {
+        this.formData = res.data
+      })
+    }
+  },
   methods: {
     // 提交请求
     submitForm () {
-      this.$axios.post('/goods/addGoods', this.formData).then((result) => {
-        if (result.data.code === 0) {
+      this.$axios.post('/goods/addEdit', this.formData).then((result) => {
+        if (result.code === 0) {
+          this.successCallback()
           this.handleClose()
         } else {
-          this.$message.error(result.data.message)
+          this.$message.error(result.message)
         }
       }).catch((err) => {
         this.$message.error(err)

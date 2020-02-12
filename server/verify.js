@@ -8,7 +8,6 @@ import Redis from 'koa-redis'
 
 const Store = new Redis().client
 const verify = async function (ctx, next) {
-  console.log(ctx.request.header.x_access_token)
   if (ctx.request.header && ctx.request.header.x_access_token) {
     const headerToken = ctx.request.header.x_access_token
     const userMessage = await Store.hget(headerToken, 'username')

@@ -14,9 +14,9 @@ const GoodsSchema = new Schema({
     type: String,
     require: true
   },
-  type: {
+  note: {
     type: String,
     require: true
   }
-})
+}, { versionKey: false })
 export default mongoose.model('Goods', GoodsSchema)

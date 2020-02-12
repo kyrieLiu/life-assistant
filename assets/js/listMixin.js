@@ -6,13 +6,22 @@
 export default {
   data () {
     return {
+      // 是否展示弹窗
       showDialog: false,
-      pageTotal: null,
+      // 弹窗标题
       dialogTitle: '',
-      tableData: []
+      // table列表数据
+      tableData: [],
+      // 查询总条数
+      total: 0,
+      // 条目数据
+      itemData: '',
+      // 条目数据ID
+      itemId: ''
     }
   },
   mounted () {
+    // 初始化列表数据
     this.initTableData(1)
   }
 }

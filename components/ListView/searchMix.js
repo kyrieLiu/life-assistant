@@ -20,7 +20,7 @@ export default {
   data () {
     return {
       // 搜索条件请求表单
-      searchValue: {},
+      condition: {},
       // 是否展示更多搜索
       isOpen: false,
       // 上一次的浏览器宽度 默认1920
@@ -183,18 +183,18 @@ export default {
     },
     // 生成接口对应的数据结构进行搜索
     handleSearch () {
-      this.searchValue = {}
+      this.condition = {}
       if (this.searchForm) {
         this.searchForm.forEach((item, index) => {
           const key = item.key
           const value = this.searchForm[index].vModel
           if (value === 0 || value) {
-            this.searchValue[key] = value
+            this.condition[key] = value
           }
         })
       }
       this.currentPage = 1
-      this.$emit('handleSearch', 1, this.searchValue)
+      this.$emit('handleSearch', 1, this.condition)
     },
     // 重置搜索条件
     resetSearchForm () {
@@ -205,7 +205,7 @@ export default {
         }
       })
       this.currentPage = 1
-      this.searchValue = {}
+      this.condition = {}
       this.$emit('resetForm')
       this.$emit('handleSearch', 1, {})
     },

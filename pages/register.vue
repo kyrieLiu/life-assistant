@@ -1,10 +1,10 @@
 <template>
-  <div class="login-container">
+  <div class="register-container">
     <el-form
       ref="loginForm"
       :model="loginForm"
       :rules="loginRules"
-      class="login-form"
+      class="register-form"
       auto-complete="on"
       label-position="left"
     >
@@ -36,23 +36,18 @@
           name="password"
           tabindex="2"
           auto-complete="on"
-          @keyup.enter.native="handleLogin"
+          @keyup.enter.native="handleRegister"
         />
       </el-form-item>
-      <div style="text-align: right;margin-bottom: 10px">
-        <nuxt-link to="/register" style="color: green;text-decoration: none">
-          去注册
-        </nuxt-link>
-      </div>
-      <el-button id="loginButton" :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleLogin">
-        登录
+
+      <el-button id="loginButton" :loading="loading" type="primary" style="width:100%;" @click.native.prevent="handleRegister">
+        注册
       </el-button>
     </el-form>
   </div>
 </template>
 
 <script>
-import Cookie from 'js-cookie'
 export default {
   layout: 'blank',
   name: 'Login',
@@ -88,7 +83,7 @@ export default {
   methods: {
     keydownListener (event) {
       if (event.key === 'Enter') {
-        this.handleLogin()
+        this.handleRegister()
       }
     },
     showPwd () {
@@ -101,13 +96,12 @@ export default {
         this.$refs.password.focus()
       })
     },
-    handleLogin () {
+    handleRegister () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.$axios.post('/user/login', this.loginForm).then((result) => {
+          this.$axios.post('/user/register', this.loginForm).then((result) => {
             if (result.code === 0) {
-              Cookie.set('token', result.data.token)
-              location.href = this.redirect || '/'
+              this.$router.go(-1)
             }
           })
         } else {
@@ -126,13 +120,13 @@ export default {
   $cursor: #fff;
 
   @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-    .login-container .el-input input {
+    .register-container .el-input input {
       color: $cursor;
     }
   }
 
   /* reset element-ui css */
-  .login-container {
+  .register-container {
     .el-input {
       display: inline-block;
       height: 47px;
@@ -164,25 +158,24 @@ export default {
   }
 </style>
 
-<style lang="scss" scoped>
+<style lang="scss">
   $bg:#2d3a4b;
   $dark_gray:#889aa4;
   $light_gray:#eee;
 
-  .login-container {
+  .register-container {
     min-height: 100%;
     width: 100%;
     background-color: $bg;
     overflow: hidden;
 
-    .login-form {
+    .register-form {
       position: relative;
       width: 420px;
       max-width: 100%;
       padding: 160px 35px 0;
       margin: 0 auto;
       overflow: hidden;
-      text-align: center;
     }
 
     .tips {

@@ -23,18 +23,16 @@ function tokenInvalid () {
 // axios扩展配置
 const axiosConfig = function ({ $axios, redirect }) {
   // 设置请求头
-  // $axios.setHeader('x_access_token', Cookie.get('token'))
   $axios.setHeader('x_access_token', Cookie.get('token'))
   // 发起请求
   $axios.onRequest((config) => {
-    console.log('Making request to ' + config.url)
   })
   // 返回结果
   $axios.onResponse((response) => {
     if (response.data.code === -2) {
       tokenInvalid()
     } else {
-      return response
+      return response.data
     }
   })
 }

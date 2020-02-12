@@ -9,7 +9,7 @@
     <div class="search-area container">
       <!--条件选择区域-->
       <div :style="{width:getContentWidth()}">
-        <el-form class="search-area-left" label-width="70px" label-position="left">
+        <el-form class="search-area-left" label-width="70px" label-position="left" @submit.native.prevent>
           <div v-for="(item,index) of searchForm" :key="index" class="search-item-parent">
             <transition name="condition">
               <div v-show="item.isVisibility" class="search-item-child">
@@ -99,11 +99,9 @@
     <!-----------------------------------数据列表-------------------------------------->
     <div class="table-content">
       <el-table
-        v-loading="asyncLoading"
         border
-        :empty-text="asyncLoadingText"
+        empty-text="暂无数据"
         :data="tableData"
-        :element-loading-text="asyncLoadingText"
         width="100%"
         :max-height="tableHeight"
       >
@@ -135,7 +133,6 @@
           <template slot-scope="scope">
             <span v-for="(items,index) in tableButton" :key="index" class="button-block">
               <el-button
-                v-if="isShowButton(items,scope.row)"
                 size="mini"
                 type="text"
                 @click="handleTableClick(items.name,scope.row)"
@@ -146,13 +143,12 @@
           </template>
         </el-table-column>
       </el-table>
-      <div v-if="totalPage>10" class="block pageAction">
+      <div v-if="total>10" class="pageAction">
         <el-pagination
           :current-page.sync="currentPage"
           :page-size="10"
           layout="prev, pager, next, jumper"
-          :total="totalPage"
-          background
+          :total="total"
           @current-change="handleCurrentChange"
         />
       </div>
@@ -244,5 +240,25 @@ export default {
     margin-left: 5px;
     margin-right: 5px;
   }
+  .pageAction{
+    margin-top: 10px;
+    float: right;
+  }
+  .el-pagination{
+
+  }
+/*!*  /deep/ .el-pagination .number.active {*/
+/*    border: 1px solid #409EFF !important*/
+/*  }*!*/
+/*  /deep/ .el-pagination .number.active {*/
+/*    border: 1px solid #FF0000*/
+/*  }*/
+/*!*  /deep/ .el-pagination.is-background .el-pager li:not(.disabled).active{*/
+/*    background-color: #1890ff !important;*/
+/*    border-color: #1890ff !important;*/
+/*  }*/
+/*  /deep/ .el-pagination.is-background .btn-next, .el-pagination.is-background .btn-prev, .el-pagination.is-background .el-pager li{*/
+/*    background: #fff;*/
+/*  }*!*/
 
 </style>
