@@ -117,7 +117,7 @@ export default {
     // 操作按钮点击事件
     handleTableClick (name, row) {
       if (name === '删除') {
-        this.handleRemoveItem(row.id, row)
+        this.handleRemoveItem(row._id)
       } else {
         this.$emit('handleClick', name, row)
       }
@@ -128,30 +128,18 @@ export default {
     },
 
     // 删除
-    handleRemoveItem (id, row) {
-      if (row.isDefault === 1) {
-        this.$message.warning('系统预制不可操作！')
-      } else {
-        this.$confirm('此操作将删除该信息, 是否继续?', '提示', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          this.deleteItem(id)
-        })
-      }
+    handleRemoveItem (id) {
+      this.$confirm('此操作将删除该信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteItem(id)
+      })
     },
     // 删除数据
     async deleteItem (id) {
-      let param
-      if (this.delParamType === 'ids') {
-        param = { ids: id }
-      } else if (this.delParamType === 'id') {
-        param = { id }
-      } else {
-        param = [id]
-      }
-
+      const param = { _id: id }
       const result = await this.$axios.post(this.delUrl, param)
       if (result) {
         if (result.code === 0) {

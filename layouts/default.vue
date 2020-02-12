@@ -53,7 +53,6 @@ export default {
     height: 100%;
     transition: margin-left .28s;
     margin-left:$sideBarWidth;
-    position: relative;
   }
   .root{
     position: absolute;

@@ -4,15 +4,6 @@
   height: 100%;
   overflow: hidden auto;
 }
-.issue-dispose-record .list-file-name{display: inline-block !important; cursor: pointer;}
-.el-textarea .el-input__count,.el-input__suffix {
-  background: none !important;
-}
- .marginTable>div {
-   margin: 0 auto !important;
-   display: table !important;
- }
- .align-left{text-align: left;}
 /*列表页搜索区域*/
 .search-area{
   box-sizing: border-box;
@@ -227,7 +218,9 @@
 .el-table .cell{
   text-align: center;
 }
-.el-table th{background-color: rgb(249,249,249)}
+.el-table th{
+  background-color: rgb(249,249,249)
+}
 .el-dialog__header,.el-dialog__footer{
   text-align: center;
 }

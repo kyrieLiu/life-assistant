@@ -234,7 +234,7 @@ export default {
   }
   .list-operate{
     margin-left: 20px;
-    margin-top: 15px;
+    margin-top: 14px;
   }
   .button-block{
     margin-left: 5px;

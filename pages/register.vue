@@ -99,7 +99,7 @@ export default {
     handleRegister () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.$axios.post('/user/register', this.loginForm).then((result) => {
+          this.$axios.post(this.urls.register, this.loginForm).then((result) => {
             if (result.code === 0) {
               this.$router.go(-1)
             }

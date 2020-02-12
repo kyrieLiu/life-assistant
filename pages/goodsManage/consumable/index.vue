@@ -16,11 +16,15 @@
     <add-edit
       v-if="showDialog"
       :dialog-title="dialogTitle"
-      :item-id="itemId"
+      :row-id="rowId"
       @close="showDialog=false"
       @submitSuccess="initTableData(1)"
     />
-    <detail v-if="showDetail" />
+    <detail
+      v-if="showDetail"
+      :row-id="rowId"
+      @handleClose="showDetail=false"
+    />
   </div>
 </template>
 
@@ -38,8 +42,9 @@ export default {
     return {
       a: '',
       tableLabel: [
-        { key: 'name', title: '名称', minWidth: 130 },
-        { key: 'address', title: '地址', minWidth: 120 }
+        { key: 'name', title: '名称' },
+        { key: 'address', title: '地址' },
+        { key: 'note', title: '备注' }
 
       ],
       searchForm: [
@@ -50,7 +55,7 @@ export default {
         { name: '删除' },
         { name: '详情' }
       ],
-      delUrl: ''
+      delUrl: '/goods/delete'
     }
   },
   methods: {
@@ -59,9 +64,11 @@ export default {
       const params = {
         page: current,
         size: 10,
+        // 1是耗材
+        type: 1,
         condition
       }
-      this.$axios.post('/goods/list', params).then((result) => {
+      this.$axios.post(this.urls.goodsList, params).then((result) => {
         if (result.code === 0) {
           this.tableData = result.list
           this.total = result.total
@@ -79,11 +86,12 @@ export default {
           this.dialogTitle = '新增耗材'
           break
         case '编辑':
-          this.itemId = row._id
+          this.rowId = row._id
           this.dialogTitle = '编辑耗材'
           this.showDialog = true
           break
         case '详情':
+          this.rowId = row._id
           this.showDetail = true
           break
       }

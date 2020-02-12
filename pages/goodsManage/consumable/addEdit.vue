@@ -58,7 +58,9 @@ export default {
       formData: {
         name: '',
         address: '',
-        note: ''
+        note: '',
+        // 1是耗材
+        type: 1
       },
       formRules: {
         name: [
@@ -71,8 +73,8 @@ export default {
     }
   },
   mounted () {
-    if (this.itemId) {
-      this.$axios.get(`/goods/detail?_id=${this.itemId}`).then((res) => {
+    if (this.rowId) {
+      this.$axios.get(`${this.urls.goodsDetail}?_id=${this.rowId}`).then((res) => {
         this.formData = res.data
       })
     }
@@ -80,7 +82,10 @@ export default {
   methods: {
     // 提交请求
     submitForm () {
-      this.$axios.post('/goods/addEdit', this.formData).then((result) => {
+      if (this.rowId) {
+        this.formData._id = this.rowId
+      }
+      this.$axios.post(this.urls.goodsAddEdit, this.formData).then((result) => {
         if (result.code === 0) {
           this.successCallback()
           this.handleClose()

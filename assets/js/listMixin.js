@@ -15,9 +15,9 @@ export default {
       // 查询总条数
       total: 0,
       // 条目数据
-      itemData: '',
+      rowData: '',
       // 条目数据ID
-      itemId: '',
+      rowId: '',
       // 展示详情
       showDetail: false
     }

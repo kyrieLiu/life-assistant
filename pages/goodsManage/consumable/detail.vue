@@ -6,21 +6,29 @@
 <template>
   <article class="detail">
     <section class="detail-top">
-      <span class="el-icon-arrow-left"> 返回</span>
+      <span class="el-icon-arrow-left" @click="handleClose"> 返回</span>
       <h2 class="detail-title">
-        标题
+        {{ detailData.name }}
       </h2>
     </section>
     <section class="detail-content">
       <dl class="detail-content-block" style="margin-top: 20px">
-        <div class="detail-content-item">
+        <div v-for="(value,key) in detailData" :key="key" class="detail-content-item">
+          <dt class="detail-key">
+            {{ getKeyName(key) }}
+          </dt>
+          <dd class="detail-value">
+            {{ value }}
+          </dd>
+        </div>
+      <!--  <div class="detail-content-item">
           <dt class="detail-key">
             备注：
           </dt>
           <dd class="detail-value">
-            内容
+            {{ detailData.note }}
           </dd>
-        </div>
+        </div>-->
       </dl>
     </section>
     <!--    <section class="detail-bottom">
@@ -34,11 +42,28 @@
   </article>
 </template>
 <script>
-
+import detailMixin from '../../../assets/js/detailMixin'
 export default {
-  data () {
-    return {
-      comment: ''
+  mixins: [detailMixin],
+  computed: {
+    getKeyName () {
+      return function (key) {
+        switch (key) {
+          case 'name':
+            return '名称'
+          case 'address':
+            return '地址'
+          case 'note':
+            return 'note'
+        }
+      }
+    }
+  },
+  mounted () {
+    if (this.rowId) {
+      this.$axios.get(`${this.urls.goodsDetail}?_id=${this.rowId}`).then((res) => {
+        this.detailData = res.data
+      })
     }
   }
 

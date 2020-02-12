@@ -17,7 +17,8 @@ app.use(bodyParser({
   extendTypes: ['json', 'form', 'text']
 }))
 mongoose.connect(dbConfig.dbs, {
-  useNewUrlParser: true
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 })
 
 // Import and Set Nuxt.js options

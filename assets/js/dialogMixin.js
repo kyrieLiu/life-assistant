@@ -9,8 +9,8 @@ export default {
     dialogTitle: {
       require: true
     },
-    itemData: '',
-    itemId: ''
+    rowData: '',
+    rowId: ''
   },
   data () {
     return {
