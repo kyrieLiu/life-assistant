@@ -1,15 +1,18 @@
 <template>
-  <el-menu
-    :collapse="isCollapse"
-    :default-active="this.$route.path"
-    class="el-menu-vertical-demo"
-    :background-color="variables.menuBg"
-    :text-color="variables.menuText"
-    @open="handleOpen"
-    @close="handleClose"
-  >
-    <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
-  </el-menu>
+  <el-scrollbar wrap-class="scrollbar-wrapper">
+    <el-menu
+      :collapse="isCollapse"
+      :default-active="this.$route.path"
+      :background-color="variables.menuBg"
+      :text-color="variables.menuText"
+      :unique-opened="false"
+      :active-text-color="variables.menuActiveText"
+      :collapse-transition="false"
+      mode="vertical"
+    >
+      <sidebar-item v-for="route in routes" :key="route.path" :item="route" :base-path="route.path" />
+    </el-menu>
+  </el-scrollbar>
 </template>
 
 <script>
@@ -36,13 +39,8 @@ export default {
       'sidebar'
     ]),
     isCollapse () {
+      // console.log(this.sidebar)
       return !this.sidebar.opened
-    }
-  },
-  methods: {
-    handleOpen (key, keyPath) {
-    },
-    handleClose (key, keyPath) {
     }
   }
 }

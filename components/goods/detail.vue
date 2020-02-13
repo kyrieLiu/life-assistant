@@ -21,24 +21,16 @@
             {{ value }}
           </dd>
         </div>
-      <!--  <div class="detail-content-item">
-          <dt class="detail-key">
-            备注：
-          </dt>
-          <dd class="detail-value">
-            {{ detailData.note }}
-          </dd>
-        </div>-->
       </dl>
     </section>
-    <!--    <section class="detail-bottom">
+    <section class="detail-bottom">
       <el-button
         type="primary"
         class="detail-bottom-button"
       >
         编辑
       </el-button>
-    </section>-->
+    </section>
   </article>
 </template>
 <script>

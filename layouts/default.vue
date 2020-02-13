@@ -2,7 +2,7 @@
   <div class="root app-wrapper" :class="classObj">
     <sidebar class="sidebar-container" />
     <div class="main-container">
-      <div :class="{'fixed-header':true}">
+      <div class="fixed-header">
         <navbar />
       </div>
       <nuxt id="nuxt-container" />
@@ -27,7 +27,6 @@ export default {
       return {
         hideSidebar: !this.sidebar.opened,
         openSidebar: this.sidebar.opened
-        // withoutAnimation: this.sidebar.withoutAnimation
       }
     }
   },
@@ -40,6 +39,7 @@ export default {
     window.removeEventListener('resize', this.resizeBrowser)
   },
   methods: {
+
     // 处理浏览器变化
     resizeBrowser () {
       const mainHeight = document.getElementById('nuxt-container').offsetHeight
@@ -61,24 +61,21 @@ export default {
     height: 100%;
     transition: margin-left .28s;
     padding-top: 50px;
+    box-sizing: border-box;
   }
   .app-wrapper {
     @include clearfix;
     position: relative;
     height: 100%;
     width: 100%;
-    &.mobile.openSidebar{
-      position: fixed;
-      top: 0;
-    }
   }
- /* .root{
+  .root{
     position: absolute;
     right: 0;
     left: 0;
     bottom: 0;
     top: 0;
-  }*/
+  }
   .fixed-header {
     position: fixed;
     top: 0;
