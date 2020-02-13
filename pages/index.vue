@@ -13,7 +13,6 @@
       :table-data="tableData"
       :total="total"
       :table-button="tableButton"
-      :del-url="delUrl"
       control-width="140px"
       @handleSearch="initTableData"
       @handleClick="handleClick"

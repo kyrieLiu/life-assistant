@@ -1,19 +1,38 @@
 <template>
-  <div class="root">
+  <div class="root app-wrapper" :class="classObj">
     <sidebar class="sidebar-container" />
-    <nuxt id="main-container" />
+    <div class="main-container">
+      <div :class="{'fixed-header':true}">
+        <navbar />
+      </div>
+      <nuxt id="nuxt-container" />
+    </div>
   </div>
 </template>
 
 <script>
 import Sidebar from '@/components/sidebar/index'
+import Navbar from '@/components/navbar/index'
 export default {
   middleware: 'checkLogin',
   components: {
-    Sidebar
+    Sidebar,
+    Navbar
+  },
+  computed: {
+    sidebar () {
+      return this.$store.getters.sidebar
+    },
+    classObj () {
+      return {
+        hideSidebar: !this.sidebar.opened,
+        openSidebar: this.sidebar.opened
+        // withoutAnimation: this.sidebar.withoutAnimation
+      }
+    }
   },
   mounted () {
-    const mainHeight = document.getElementById('main-container').offsetHeight
+    const mainHeight = document.getElementById('nuxt-container').offsetHeight
     this.getTableHeight(mainHeight)
     window.addEventListener('resize', this.resizeBrowser)
   },
@@ -23,8 +42,7 @@ export default {
   methods: {
     // 处理浏览器变化
     resizeBrowser () {
-      const mainHeight = document.getElementById('main-container').offsetHeight
-      console.log('mainHeight==', mainHeight)
+      const mainHeight = document.getElementById('nuxt-container').offsetHeight
       this.getTableHeight(mainHeight)
     },
     // 计算table应有的高度  高度=容器高度-其他控件占有的控件高度
@@ -38,27 +56,39 @@ export default {
 
 <style lang="scss" scoped>
   @import "../assets/css/variables.scss";
-  .sidebar-container {
-    transition: width 0.28s;
-    width: $sideBarWidth;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1001;
-    overflow: hidden;
-  }
-  #main-container {
+  @import "../assets/css/mixin.scss";
+  #nuxt-container {
     height: 100%;
     transition: margin-left .28s;
-    margin-left:$sideBarWidth;
+    padding-top: 50px;
   }
-  .root{
+  .app-wrapper {
+    @include clearfix;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    &.mobile.openSidebar{
+      position: fixed;
+      top: 0;
+    }
+  }
+ /* .root{
     position: absolute;
     right: 0;
     left: 0;
     bottom: 0;
     top: 0;
+  }*/
+  .fixed-header {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 9;
+    width: calc(100% - #{$sideBarWidth});
+    transition: width 0.28s;
+  }
+
+  .hideSidebar .fixed-header {
+    width: calc(100% - 54px)
   }
 </style>

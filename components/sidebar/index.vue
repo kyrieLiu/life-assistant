@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import SidebarItem from './SidebarItem'
 import { routes } from '@/static/routes-menu'
 import variables from '@/assets/css/variables.scss'
@@ -22,7 +23,6 @@ export default {
   },
   data () {
     return {
-      isCollapse: false
     }
   },
   computed: {
@@ -31,6 +31,12 @@ export default {
     },
     routes () {
       return routes
+    },
+    ...mapGetters([
+      'sidebar'
+    ]),
+    isCollapse () {
+      return !this.sidebar.opened
     }
   },
   methods: {
@@ -41,3 +47,9 @@ export default {
   }
 }
 </script>
+<style>
+  .el-menu-vertical-demo:not(.el-menu--collapse) {
+    width: 200px;
+    min-height: 400px;
+  }
+</style>

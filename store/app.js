@@ -1,7 +1,11 @@
 const state = () => ({
 // 列表table固定高度
-  tableHeight: '1'
+  tableHeight: -1
 })
+
+const getters = {
+  tableHeight: state => state.tableHeight
+}
 
 const mutations = {
   setTableHeight (state, val) {
@@ -18,6 +22,7 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
 }
