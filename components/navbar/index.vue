@@ -42,7 +42,7 @@ export default {
     Hamburger
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('app', [
       'sidebar'
     ])
   },
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     toggleSideBar () {
-      this.$store.dispatch('toggleSideBar')
+      this.$store.dispatch('app/toggleSideBar')
     },
     async logout () {
       await this.$post(this.urls.LOGIN, { username: 'admin', password: '123456' })
