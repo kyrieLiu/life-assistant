@@ -1,9 +1,9 @@
 
 module.exports = {
   mode: 'universal',
-  env: {
-    _AXIOS_BASE_URL_: 'www.baidu.com'
-  },
+  // server: {
+  //   host: '192.168.124.11'
+  // },
   /*
   ** Headers of the page
   */

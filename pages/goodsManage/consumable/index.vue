@@ -53,7 +53,10 @@ export default {
 
       ],
       searchForm: [
-        { name: '名称', placeholder: '请输入名称', type: 'input', key: 'name' }
+        { name: '名称啊啊', placeholder: '请输入名称', type: 'input', key: 'name' },
+        { name: '名称带的', placeholder: '请输入名称', data: [], type: 'select', key: 'name1' },
+        { name: '名称带的', placeholder: '请输入名称', type: 'date', key: 'name2' },
+        { name: '名称是是', placeholder: '请输入名称', type: 'date', key: 'name3' }
       ],
       tableButton: [
         { name: '编辑' },

@@ -47,7 +47,6 @@ export default {
     ])
   },
   mounted () {
-    console.log('sidebar===', this.sidebar)
   },
   methods: {
     toggleSideBar () {

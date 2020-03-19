@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 
+import cors from 'koa-cors'
 import goods from '../server/interface/goods'
 import verifyUser from './verify'
 import user from './interface/user'
@@ -20,6 +21,7 @@ mongoose.connect(dbConfig.dbs, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
+app.use(cors())
 
 // Import and Set Nuxt.js options
 config.dev = app.env !== 'production'

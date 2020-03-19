@@ -11,6 +11,7 @@ const Store = new Redis().client
 const router = new Router({ prefix: '/user' })
 
 router.post('/login', async (ctx, next) => {
+  console.log('访问', ctx.request.body)
   const username = ctx.request.body.username
   if (!username) {
     ctx.body = { message: '请输入用户名' }

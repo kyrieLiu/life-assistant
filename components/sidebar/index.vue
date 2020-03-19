@@ -2,7 +2,7 @@
   <el-scrollbar wrap-class="scrollbar-wrapper">
     <el-menu
       :collapse="isCollapse"
-      :default-active="this.$route.path"
+      :default-active="currentPath"
       :background-color="variables.menuBg"
       :text-color="variables.menuText"
       :unique-opened="false"
@@ -26,6 +26,7 @@ export default {
   },
   data () {
     return {
+      current: '/goodsManage/consumable/'
     }
   },
   computed: {
@@ -41,6 +42,19 @@ export default {
     isCollapse () {
       // console.log(this.sidebar)
       return !this.sidebar.opened
+    },
+    currentPath: {
+      get () {
+        const route = this.$route.path
+        if (route.length > 1 && route[route.length - 1] === '/') {
+          return route.substring(0, route.length - 1)
+        } else {
+          return route
+        }
+      },
+      set () {
+
+      }
     }
   }
 }
