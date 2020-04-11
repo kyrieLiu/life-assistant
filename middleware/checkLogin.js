@@ -1,4 +1,4 @@
-import utils from '~/utils/cookie-access'
+import utils from '../utils/cookie-access'
 
 export default function ({ route, req, res, redirect }) {
   const isClient = process.client

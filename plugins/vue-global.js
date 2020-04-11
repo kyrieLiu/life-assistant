@@ -3,8 +3,8 @@
  * @date 2020/2/10
  * @Description: 定义全局组件,函数
  */
-import ListView from '~/components/ListView'
-import urls from '~/static/urls'
+import ListView from '../components/ListView'
+import urls from '../static/urls'
 
 export default {
   install (Vue) {

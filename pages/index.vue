@@ -27,7 +27,7 @@
 
 <script>
 import listMixin from '../assets/js/listMixin'
-import detail from '~/components/goods/detail'
+import detail from '../components/goods/detail'
 export default {
   components: {
     detail

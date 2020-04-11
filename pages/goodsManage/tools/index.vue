@@ -35,8 +35,8 @@
 
 <script>
 import listMixin from '../../../assets/js/listMixin'
-import addEdit from '~/components/goods/tools/addEdit'
-import detail from '~/components/goods/detail'
+import addEdit from '../../../components/goods/tools/addEdit'
+import detail from '../../../components/goods/detail'
 export default {
   components: {
     addEdit,

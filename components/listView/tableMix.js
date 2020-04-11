@@ -4,7 +4,7 @@
  * Date: 2019/12/13 10:18 上午
  * Description: 列表混入
  */
-import bus from '~/utils/bus'
+import bus from '../../utils/bus'
 export default {
   props: {
     // table顶部head列表

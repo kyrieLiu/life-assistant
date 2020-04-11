@@ -3,7 +3,7 @@
  * @date 2020/2/11
  * @Description: 弹窗混入
  */
-import bus from '~/utils/bus'
+import bus from '../../utils/bus'
 export default {
   props: {
     dialogTitle: {
