@@ -1,9 +1,12 @@
 
 module.exports = {
   mode: 'universal',
-  // server: {
-  //   host: '192.168.124.11'
-  // },
+  server: {
+    port: 3001 // default: 3000
+  },
+  router: {
+    base: '/life/'
+  },
   /*
   ** Headers of the page
   */
