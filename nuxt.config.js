@@ -2,7 +2,7 @@
 module.exports = {
   mode: 'universal',
   server: {
-    port: 3001 // default: 3000
+    port: 3002 // default: 3000
   },
   router: {
     base: '/life/'
