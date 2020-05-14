@@ -33,8 +33,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from './Breadcrumb'
-import Hamburger from './Hamburger'
+import Breadcrumb from './breadcrumb'
+import Hamburger from './hamburger'
 
 export default {
   components: {
