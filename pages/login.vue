@@ -52,6 +52,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import Cookie from 'js-cookie'
 export default {
   layout: 'blank',
@@ -106,8 +107,8 @@ export default {
         if (valid) {
           this.$axios.post(this.urls.login, this.loginForm).then((result) => {
             if (result.code === 0) {
-              Cookie.set('token', result.data.token)
-              location.href = this.redirect || '/life'
+              // Cookie.set('token', result.data.token)
+              // location.href = this.redirect || '/life'
             }
           })
         } else {

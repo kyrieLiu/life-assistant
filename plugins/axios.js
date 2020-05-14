@@ -23,7 +23,8 @@ function tokenInvalid () {
 // axios扩展配置
 const axiosConfig = function ({ $axios, redirect }) {
   // 设置请求头
-  $axios.setHeader('x_access_token', Cookie.get('token'))
+  $axios.setHeader('X-Requested-With', 'XMLHttpRequest')
+  $axios.setBaseURL('http://127.0.0.1:3000/')
   // 发起请求
   $axios.onRequest((config) => {
   })
