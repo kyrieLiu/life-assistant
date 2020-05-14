@@ -2,10 +2,7 @@
 module.exports = {
   mode: 'universal',
   server: {
-    port: 3004 // default: 3000
-  },
-  router: {
-    base: '/life/'
+    port: 3000
   },
   /*
   ** Headers of the page
