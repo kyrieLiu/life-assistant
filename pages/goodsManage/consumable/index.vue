@@ -69,6 +69,7 @@ export default {
   methods: {
     // 初始化数据
     initTableData (current, condition) {
+      if (!condition) { condition = {} }
       // 1是耗材
       condition.type = 1
       const params = {
