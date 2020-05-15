@@ -4,9 +4,9 @@ module.exports = {
   server: {
     port: 3000
   },
-  router: {
-    base: '/life/'
-  },
+  // router: {
+  //   base: '/life/'
+  // },
   /*
   ** Headers of the page
   */
