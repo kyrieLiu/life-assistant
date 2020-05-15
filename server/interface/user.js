@@ -8,7 +8,7 @@ import Users from '../dbs/models/users'
 
 const Store = new Redis().client
 
-const router = new Router({ prefix: '/api/user' })
+const router = new Router({ prefix: '/interface/user' })
 
 router.post('/login', async (ctx, next) => {
   console.log('访问', ctx.request.body)
