@@ -23,7 +23,8 @@ function tokenInvalid () {
 // axios扩展配置
 const axiosConfig = function ({ $axios, redirect }) {
   // 设置请求头
-  $axios.setBaseURL('http://121.36.173.121/api/')
+  $axios.setHeader('X-Requested-With', 'XMLHttpRequest')
+  $axios.setBaseURL('http://121.36.173.121/')
   // 发起请求
   $axios.onRequest((config) => {
   })
