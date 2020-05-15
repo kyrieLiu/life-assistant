@@ -108,7 +108,8 @@ export default {
           this.$axios.post(this.urls.login, this.loginForm).then((result) => {
             if (result.code === 0) {
               Cookie.set('token', result.data.token)
-              location.href = this.redirect || '/life'
+              // location.href = this.redirect || '/life'
+              location.href = '/'
             }
           })
         } else {
