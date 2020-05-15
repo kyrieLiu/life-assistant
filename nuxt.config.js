@@ -58,6 +58,16 @@ module.exports = {
   */
   axios: {
   },
+  proxy: {
+    '/api': {
+      // target: 'http://121.36.173.121/api/',
+      target: 'http://localhost:3000/',
+      changeOrigin: true,
+      pathRewrite: {
+        '^/api': ''
+      }
+    }
+  },
   /*
   ** Build configuration
   */

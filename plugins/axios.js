@@ -24,7 +24,7 @@ function tokenInvalid () {
 const axiosConfig = function ({ $axios, redirect }) {
   // 设置请求头
   $axios.setHeader('X-Requested-With', 'XMLHttpRequest')
-  // $axios.setBaseURL('http://127.0.0.1:3000/')
+  // $axios.setBaseURL('/api')
   // 发起请求
   $axios.onRequest((config) => {
   })

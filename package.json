@@ -12,6 +12,12 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "test": "jest"
   },
+  "config": {
+    "nuxt": {
+      "host": "0.0.0.0",
+      "port": 3000
+    }
+  },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
     "autoprefixer": "^9.7.4",
