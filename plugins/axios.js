@@ -24,7 +24,7 @@ function tokenInvalid () {
 const axiosConfig = function ({ $axios, redirect }) {
   // 设置请求头
   $axios.setHeader('X-Requested-With', 'XMLHttpRequest')
-  $axios.setBaseURL('http://121.36.173.121/lifeapi/')
+  $axios.setBaseURL('http://127.0.0.1/lifeapi/')
   // 发起请求
   $axios.onRequest((config) => {
   })
