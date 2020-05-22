@@ -37,6 +37,9 @@
 import listMixin from '../../../assets/js/listMixin'
 import addEdit from '../../../components/goods/consumable/addEdit'
 import detail from '../../../components/goods/detail'
+// eslint-disable-next-line no-unused-vars
+import { $get } from '../../../utils/request'
+
 export default {
   components: {
     addEdit,
@@ -53,10 +56,7 @@ export default {
 
       ],
       searchForm: [
-        { name: '名称啊啊', placeholder: '请输入名称', type: 'input', key: 'name' },
-        { name: '名称带的', placeholder: '请输入名称', data: [], type: 'select', key: 'name1' },
-        { name: '名称带的', placeholder: '请输入名称', type: 'date', key: 'name2' },
-        { name: '名称是是', placeholder: '请输入名称', type: 'date', key: 'name3' }
+        { name: '名称', placeholder: '请输入名称', type: 'input', key: 'name' }
       ],
       tableButton: [
         { name: '编辑' },
@@ -65,6 +65,9 @@ export default {
       ],
       delUrl: '/goods/delete'
     }
+  },
+  mounted () {
+    // this.getDetailData()
   },
   methods: {
     // 初始化数据
@@ -88,6 +91,17 @@ export default {
         this.$message.error(e)
       })
     },
+    // // 获取园区信息
+    // getDetailData () {
+    //   $get(this.urls.getParkInfo + '/1').then((result) => {
+    //     if (result.data.code === 'SUCCESS') {
+    //     } else {
+    //       this.$message.error('查询失败')
+    //     }
+    //   }).catch(() => {
+    //     this.$message.error('查询失败')
+    //   })
+    // },
     handleClick (name, row) {
       switch (name) {
         case '新增':
@@ -108,3 +122,10 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+  .test{
+    width: 200px;
+    height: 200px;
+    background: blue;
+  }
+</style>

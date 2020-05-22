@@ -15,6 +15,8 @@ export default {
   // 新增编辑
   goodsAddEdit: '/goods/addEdit',
   // 物品详情
-  goodsDetail: '/goods/detail'
+  goodsDetail: '/goods/detail',
+  // 获取园区信息
+  getParkInfo: '/park/info/getDoor'
 
 }

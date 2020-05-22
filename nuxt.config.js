@@ -53,21 +53,22 @@ module.exports = {
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/proxy'
   ],
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
+    proxy: true
   },
   proxy: {
     '/api': {
-      // target: 'http://121.36.173.121/api/',
-      target: 'http://localhost:3000/',
+      target: 'http://10.17.7.103:8080',
       changeOrigin: true,
       pathRewrite: {
-        '^/api': ''
+        '^/api': '/'
       }
     }
   },
@@ -75,11 +76,21 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    transpile: [/^element-ui/],
     /*
     ** You can extend webpack config here
     */
     extend (config, ctx) {
-    }
+      // Run ESLint on save
+      if (ctx.isDev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    },
+    // https://github.com/nuxt/nuxt.js/issues/3804
+    cache: false
   }
 }
