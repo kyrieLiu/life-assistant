@@ -48,12 +48,10 @@ export default {
   mixins: [listMixin],
   data () {
     return {
-      a: '',
       tableLabel: [
         { key: 'name', title: '名称' },
         { key: 'address', title: '地址' },
         { key: 'note', title: '备注' }
-
       ],
       searchForm: [
         { name: '名称', placeholder: '请输入名称', type: 'input', key: 'name' }
