@@ -189,7 +189,7 @@ export default {
   .button-area{
     display: flex;
     align-items: center;
-    height: 80px;
+    height: 60px;
     margin-left: 30px;
     /*展开关闭箭头*/
     .search-arrow{
