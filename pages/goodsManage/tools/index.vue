@@ -52,7 +52,7 @@ export default {
 
       ],
       searchForm: [
-        { name: '名称', placeholder: '请输入名称', type: 'input', key: 'name' }
+        { name: '名称', placeholder: '请输入名称', type: 'input', key: 'keyword' }
       ],
       tableButton: [
         { name: '编辑' },

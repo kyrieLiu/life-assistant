@@ -40,7 +40,7 @@ export default {
   created () {
     /* 初始化数据,增加条件默认值 */
     this.searchForm.forEach((item, index) => {
-      this.searchForm.vModel = ''
+      this.$set(item, 'vModel', '')
       if (index < this.SINGLE_LINE_NUM) {
         item.isVisibility = true
       } else {

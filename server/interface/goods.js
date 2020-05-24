@@ -16,7 +16,24 @@ router.post('/list', async (ctx) => {
     const size = body.size
     const condition = body.condition
     const skipNum = (page - 1) * size
-    const list = await Goods.find(condition).skip(skipNum).limit(size).sort({ _id: -1 }).exec()
+    // eslint-disable-next-line no-unused-vars
+    const reg = new RegExp(condition.keyword, 'i')
+    const list = await Goods.find(
+      {
+        $or: [ // 多条件，数组
+          { name: { $regex: reg } },
+          { address: { $regex: reg } }
+        ],
+        type: condition.type
+      },
+      {
+        type: 1,
+        name: 1,
+        address: 1,
+        note: 1
+      }).skip(skipNum).limit(size)
+      // .sort({ _id: -1 })
+      .exec()
     const total = await Goods.countDocuments(condition)
     ctx.body = {
       list,
