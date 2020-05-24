@@ -65,6 +65,7 @@ export default {
   methods: {
     // 初始化数据
     initTableData (current, condition) {
+      if (!condition) { condition = {} }
       // 2是物品
       condition.type = 2
       const params = {
