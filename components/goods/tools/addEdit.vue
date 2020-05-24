@@ -85,7 +85,9 @@ export default {
       if (this.rowId) {
         this.formData._id = this.rowId
       }
+      this.toggleLoading(true)
       this.$axios.post(this.urls.goodsAddEdit, this.formData).then((result) => {
+        this.toggleLoading(false)
         if (result.code === 0) {
           this.successCallback()
           this.handleClose()
@@ -93,6 +95,7 @@ export default {
           this.$message.error(result.message)
         }
       }).catch((err) => {
+        this.toggleLoading(false)
         this.$message.error(err)
       })
     }
