@@ -25,13 +25,14 @@ router.post('/list', async (ctx) => {
           { address: { $regex: reg } }
         ],
         type: condition.type
-      },
-      {
-        type: 1,
-        name: 1,
-        address: 1,
-        note: 1
-      }).skip(skipNum).limit(size)
+      }
+      // {
+      //   type: 1,
+      //   name: 1,
+      //   address: 1,
+      //   note: 1
+      // }
+    ).skip(skipNum).limit(size)
       // .sort({ _id: -1 })
       .exec()
     const total = await Goods.countDocuments(condition)
