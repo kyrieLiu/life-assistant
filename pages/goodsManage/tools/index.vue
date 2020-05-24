@@ -45,7 +45,6 @@ export default {
   mixins: [listMixin],
   data () {
     return {
-      a: '',
       tableLabel: [
         { key: 'name', title: '名称' },
         { key: 'address', title: '地址' },
@@ -87,12 +86,13 @@ export default {
     handleClick (name, row) {
       switch (name) {
         case '新增':
+          this.rowId = null
+          this.dialogTitle = '新增工具'
           this.showDialog = true
-          this.dialogTitle = '新增耗材'
           break
         case '编辑':
           this.rowId = row._id
-          this.dialogTitle = '编辑耗材'
+          this.dialogTitle = '编辑工具'
           this.showDialog = true
           break
         case '详情':

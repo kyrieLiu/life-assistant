@@ -18,13 +18,13 @@
       :rules="formRules"
       label-position="left"
     >
-      <el-form-item label="耗材名称：" prop="name">
+      <el-form-item label="工具名称：" prop="name">
         <el-input
           v-model.trim="formData.name"
-          placeholder="请输入耗材名称"
+          placeholder="请输入工具名称"
         />
       </el-form-item>
-      <el-form-item label="耗材地址：" prop="address">
+      <el-form-item label="工具地址：" prop="address">
         <el-input
           v-model.trim="formData.address"
           placeholder="请输入地址"

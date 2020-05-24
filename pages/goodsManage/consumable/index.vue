@@ -103,8 +103,9 @@ export default {
     handleClick (name, row) {
       switch (name) {
         case '新增':
-          this.showDialog = true
+          this.rowId = null
           this.dialogTitle = '新增耗材'
+          this.showDialog = true
           break
         case '编辑':
           this.rowId = row._id

@@ -23,14 +23,14 @@
         </div>
       </dl>
     </section>
-    <section class="detail-bottom">
+  <!--  <section class="detail-bottom">
       <el-button
         type="primary"
         class="detail-bottom-button"
       >
         编辑
       </el-button>
-    </section>
+    </section>-->
   </article>
 </template>
 <script>
@@ -46,7 +46,9 @@ export default {
           case 'address':
             return '地址'
           case 'note':
-            return 'note'
+            return '备注'
+          case 'type':
+            return '类型'
         }
       }
     }
@@ -54,7 +56,9 @@ export default {
   mounted () {
     if (this.rowId) {
       this.$axios.get(`${this.urls.goodsDetail}?_id=${this.rowId}`).then((res) => {
-        this.detailData = res.data
+        const data = res.data
+        data.type = data.type === 1 ? '耗材' : '工具'
+        this.detailData = data
       })
     }
   }
