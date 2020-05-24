@@ -18,14 +18,17 @@ router.post('/list', async (ctx) => {
     const skipNum = (page - 1) * size
     // eslint-disable-next-line no-unused-vars
     const reg = new RegExp(condition.keyword, 'i')
+    const params = {
+      $or: [ // 多条件，数组
+        { name: { $regex: reg } },
+        { address: { $regex: reg } }
+      ]
+    }
+    if (condition.type) {
+      params.type = condition.type
+    }
     const list = await Goods.find(
-      {
-        $or: [ // 多条件，数组
-          { name: { $regex: reg } },
-          { address: { $regex: reg } }
-        ],
-        type: condition.type
-      }
+      params
       // {
       //   type: 1,
       //   name: 1,
